@@ -9,6 +9,7 @@ const Card = (props) => {
     const [next, setNext] = useState(false)
     const [count, setCount] = useState(0)
 
+
     const shuffleArray = (arr) => {
         for (let i = arr.length - 1 ; i > 0 ; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -19,7 +20,6 @@ const Card = (props) => {
         return arr;
     }
   
-
     const questionOne = (arr) => {
         const randomNum = Math.floor(Math.random() * 249);
         const question =  `${arr[randomNum].name} is the capital of ?`;
@@ -41,11 +41,34 @@ const Card = (props) => {
          questions = questionObj
     }
 
-    questionOne(countryArray)
+    const questionTwo = (arr) => {
+        const randomNum = Math.floor(Math.random() * 249);
+        const image = arr[randomNum].flag;
+        const question =  'this flag belogns to which country?';
+        const options = [
+            arr[randomNum].capital, 
+            arr[Math.floor(Math.random() * 249)].capital, 
+            arr[Math.floor(Math.random() * 249)].capital, 
+            arr[Math.floor(Math.random() * 249)].capital
+         ];
+
+         const shuffledOptions = shuffleArray(options)
+
+         var questionObj = {
+             question : question,
+             image : image,
+             option : shuffledOptions ,
+             right : arr[randomNum].capital,
+             id: shortid.generate()
+         }
+         questions = questionObj
+    }
+
+    const randomNum = Math.floor(Math.random() * 2);
+    const questionArray = [questionOne , questionTwo];
+    questionArray[randomNum](countryArray)
 
     const handleNext = () => {
-        questionOne(countryArray)
-        console.log(questions)
         setNext(!next)
         setCount(count+1)
     }
@@ -53,7 +76,7 @@ const Card = (props) => {
   
     return ( 
         <div className="container">
-            <Question question={questions.question} key={questions.id}  option={questions.option} right={questions.right} next={handleNext} count={count}/>
+            <Question question={questions.question} key={questions.id}  image={questions.image} option={questions.option} right={questions.right} next={handleNext} count={count}/>
         </div>
      );
 }

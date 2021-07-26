@@ -24,9 +24,11 @@ const Question = (props) => {
     return ( 
         <>
         <h1>{props.question}</h1>
+        <img src={props.image} alt="" />
         {props.option.map(option=> <Choices option={option} key={shortid.generate()} checkAnswer={handleCheckAnswer}/>)}
         {button && <button onClick={handleNext}>Next</button>}
         {isDone && <Result count={props.count}/>}
+        {console.log(props.right)}
         </>
      );
 }
